@@ -17,7 +17,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "resourcegroup" {
-  name     = "devtest-resources"
+  name     = "test-resources"
   location = "northeurope"
 }
 
@@ -37,7 +37,7 @@ resource "azurerm_subnet" "vnet_sub" {
 }
 
 resource "azurerm_storage_account" "storage_account" {
-  name                     = "storageaccascode232"
+  name                     = "storageaccountname"
   resource_group_name      = azurerm_resource_group.resourcegroup.name
   location                 = azurerm_resource_group.resourcegroup.location
   account_tier             = "Standard"
@@ -80,15 +80,15 @@ resource "null_resource" "pim_pag_config" {
       $ErrorActionPreference = 'Stop'
 
       # Variables
-      $resourceGroupName = "devtest-resources"
-      $storageAccountName = "storageaccascode232"
-      $pagName = "PAG-SA-Blob"
-      $roleName = "Storage-Blob-Data"
+      $resourceGroupName = "test-resources"
+      $storageAccountName = "storageaccountname"
+      $pagName = "new_value"
+      $roleName = "new_value"
 
       # Get necessary IDs
       $subscriptionId = (az account show --query id -o tsv)
       $storageAccountId = (az storage account show --name $storageAccountName --resource-group $resourceGroupName --query id -o tsv)
-      $userObjectId = "8834643c-cf97-4e13-9970-277dfa04d91f"
+      $userObjectId = "User_Principal_ID"
 
       # Create PAG group
       az ad group create --display-name $pagName --mail-nickname $pagName
